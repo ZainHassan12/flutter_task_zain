@@ -59,14 +59,21 @@ class AppTextStyles {
 
   // Card
   static TextStyle get cardTitle =>
-      _sfProBold.copyWith(fontSize: AppDimensions.sp(12), color: textPrimary);
+      _sfProBold.copyWith(fontSize: AppDimensions.sp(16), color: textPrimary);
 
-  static TextStyle get cardRegular => _sfProRegular.copyWith(
-      fontSize: AppDimensions.sp(12), color: textSecondary);
+  static TextStyle get validFor => _sfProRegular.copyWith(
+        fontSize: AppDimensions.sp(12),
+        color: textSecondary,
+      );
+
+  static TextStyle get validForDays => _sfProBold.copyWith(
+        fontSize: AppDimensions.sp(12),
+        color: textPrimary,
+      );
 
   // Price
-  static TextStyle get priceRegular => _sfProRegular.copyWith(
-      fontSize: AppDimensions.sp(16), color: textPrimary);
+  static TextStyle get priceRegular =>
+      _sfProRegular.copyWith(fontSize: AppDimensions.sp(16), color: accentBlue);
 
   static TextStyle get priceBold =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(16), color: accentBlue);
@@ -91,17 +98,13 @@ class AppTextStyles {
   static TextStyle get checkoutBold =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(14), color: white);
 
-  // Contact
-  static TextStyle get contactRegular => _sfProRegular.copyWith(
-      fontSize: AppDimensions.sp(14), color: textPrimary);
-
   static TextStyle get contactBold =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(14), color: greenAccent);
 
   // Supported
-  static TextStyle get supportedRegular => _sfProRegular.copyWith(
-      fontSize: AppDimensions.sp(12), color: textPrimary);
+  static TextStyle get supportedRegular =>
+      _sfProRegular.copyWith(fontSize: AppDimensions.sp(14), color: finalText);
 
   static TextStyle get supportedBold =>
-      _sfProBold.copyWith(fontSize: AppDimensions.sp(12), color: textPrimary);
+      _sfProBold.copyWith(fontSize: AppDimensions.sp(16), color: textPrimary);
 }

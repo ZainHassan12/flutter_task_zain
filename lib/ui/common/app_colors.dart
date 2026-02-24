@@ -12,12 +12,13 @@ const Color textSecondary = Color(0xFF122644); // Card text, Borders
 const Color textGrey = Color(0xFF667085); // Secondary info (5 GB / 30 Days)
 
 // Background Colors
-const Color cardBackground =
+const Color cardTitleBackground =
     Color(0xFFEEF7FF); // Card background, Smart container
 const Color white = Color(0xFFFFFFFF); // Default background
+
+const Color finalText = Color(0xFF001C3E); // Final text color
 
 // Border Colors
 const Color borderLight = Color(0xFFD0D5DD); // Search bar border
 const Color borderGrey = Color(0xFFCCCCCC); // Divider lines
-const Color borderDark = Color(0xFF122644);     // Bottom sheet border
-
+const Color borderDark = Color(0xFF122644); // Bottom sheet border

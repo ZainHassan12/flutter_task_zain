@@ -1,19 +1,17 @@
-class RegionalPackageModel {
+class GlobalPackageModel {
   final String id;
-  final String title;
+  final String name;
   final String data;
   final int validityDays;
   final int supportedCountries;
   final double price;
-  int quantity;
 
-  RegionalPackageModel({
+  GlobalPackageModel({
     required this.id,
-    required this.title,
+    required this.name,
     required this.data,
     required this.validityDays,
     required this.supportedCountries,
     required this.price,
-    this.quantity = 0,
   });
 }

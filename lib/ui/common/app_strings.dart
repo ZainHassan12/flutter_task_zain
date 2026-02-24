@@ -36,3 +36,8 @@ const String usd = "USD";
 
 // Currency
 const String currencySymbol = "USD";
+
+// Asset Images
+const String flagTurkey = "assets/images/TR_flag.png";
+const String cartIcon = "assets/images/cart_icon.png";
+const String whatsappIcon = "assets/images/whatsapp.png";

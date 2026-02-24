@@ -62,7 +62,9 @@ class HomeView extends StackedView<HomeViewModel> {
               // Turkey Packages Grid
               TurkeyPackagesGrid(
                 packages: viewModel.turkeyPackages,
-                onPackageTap: (package) {},
+                cartItems: viewModel.cartItems,
+                onPackageTap: (package) =>
+                    viewModel.onTurkeyPackageTap(package),
               ),
               SizedBox(
                   height: AppDimensions.h(
@@ -84,7 +86,8 @@ class HomeView extends StackedView<HomeViewModel> {
               // 🔥 ADD THIS - Global Packages Grid
               GlobalPackagesGrid(
                 packages: viewModel.globalPackages,
-                onTap: (package) {},
+                cartItems: viewModel.cartItems,
+                onTap: (package) => viewModel.onGlobalPackageTap(package),
               ),
 
               // Bottom padding

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 // Brand Colors
 const Color primaryBlue = Color(0xFF326EE6); // App Bar
-const Color accentBlue = Color(0xFF329CFB); // Buttons, Highlights, Span text
+const Color accentBlue = Color(0xFF329CFB);
+const Color greenBorder = Color(0xFF15D59D); // Buttons, Highlights, Span text
 const Color greenAccent =
     Color(0xFF1EC896); // WhatsApp text, Checkout button, Ellipse
 

@@ -5,6 +5,7 @@ class GlobalPackageModel {
   final int validityDays;
   final int supportedCountries;
   final double price;
+  int quantity;
 
   GlobalPackageModel({
     required this.id,
@@ -13,5 +14,6 @@ class GlobalPackageModel {
     required this.validityDays,
     required this.supportedCountries,
     required this.price,
+    this.quantity = 1,
   });
 }

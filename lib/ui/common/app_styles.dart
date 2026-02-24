@@ -79,8 +79,8 @@ class AppTextStyles {
       _sfProBold.copyWith(fontSize: AppDimensions.sp(16), color: accentBlue);
 
   // Bottom Sheet
-  static TextStyle get bottomSheetAmount => _sfProRegular.copyWith(
-      fontSize: AppDimensions.sp(15), color: textPrimary);
+  static TextStyle get bottomSheetAmount =>
+      _sfProRegular.copyWith(fontSize: AppDimensions.sp(15), color: accentBlue);
 
   static TextStyle get bottomSheetAmountBold =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(15), color: accentBlue);

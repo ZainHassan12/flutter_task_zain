@@ -6,19 +6,19 @@ import 'package:flutter_task_zain/ui/widgets/turkey_packages_card/turkey_package
 class TurkeyPackagesGrid extends StatelessWidget {
   final List<TurkeyPackageModel> packages;
   final Function(TurkeyPackageModel) onPackageTap;
+  final List<dynamic> cartItems; // ✅ To check which cards are selected
 
   const TurkeyPackagesGrid({
     super.key,
     required this.packages,
     required this.onPackageTap,
+    required this.cartItems,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: AppDimensions.pHuge,
-      ),
+      padding: EdgeInsets.symmetric(horizontal: AppDimensions.pHuge),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -31,8 +31,10 @@ class TurkeyPackagesGrid extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           final package = packages[index];
+          final isSelected = cartItems.any((item) => item.id == package.id);
           return TurkeyPackageCard(
             package: package,
+            isSelected: isSelected,
             onTap: () => onPackageTap(package),
           );
         },

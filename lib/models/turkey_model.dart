@@ -10,6 +10,6 @@ class TurkeyPackageModel {
     required this.data,
     required this.validityDays,
     required this.price,
-    this.quantity = 0,
+    this.quantity = 1,
   });
 }

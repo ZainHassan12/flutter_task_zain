@@ -6,11 +6,13 @@ import 'package:flutter_task_zain/ui/widgets/global_package_card/global_package_
 class GlobalPackagesGrid extends StatelessWidget {
   final List<GlobalPackageModel> packages;
   final Function(GlobalPackageModel) onTap;
+  final List<dynamic> cartItems; // ✅ To check which cards are selected
 
   const GlobalPackagesGrid({
     super.key,
     required this.packages,
     required this.onTap,
+    required this.cartItems,
   });
 
   @override
@@ -28,9 +30,12 @@ class GlobalPackagesGrid extends StatelessWidget {
           childAspectRatio: 0.9,
         ),
         itemBuilder: (context, index) {
+          final package = packages[index];
+          final isSelected = cartItems.any((item) => item.id == package.id);
           return GlobalPackageCard(
-            package: packages[index],
-            onTap: () => onTap(packages[index]),
+            package: package,
+            isSelected: isSelected,
+            onTap: () => onTap(package),
           );
         },
       ),

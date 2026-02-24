@@ -20,8 +20,7 @@ class GlobalPackageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardInner = Container(
-      width: AppDimensions.secondCardWidth,
-      height: AppDimensions.secondCardHeight,
+      // ✅ Removed hardcoded width & height — let the grid cell control sizing
       padding: EdgeInsets.all(AppDimensions.pM),
       decoration: BoxDecoration(
         color: white,
@@ -61,6 +60,7 @@ class GlobalPackageCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Data:", style: AppTextStyles.validFor),
                   SizedBox(height: AppDimensions.pXS),
@@ -68,6 +68,7 @@ class GlobalPackageCard extends StatelessWidget {
                 ],
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Valid for:", style: AppTextStyles.validFor),
                   SizedBox(height: AppDimensions.pXS),
@@ -100,7 +101,6 @@ class GlobalPackageCard extends StatelessWidget {
       ),
     );
 
-    // ✅ Gradient border when selected, plain border when not
     if (isSelected) {
       return GestureDetector(
         onTap: onTap,

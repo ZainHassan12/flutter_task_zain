@@ -6,7 +6,7 @@ import 'package:flutter_task_zain/ui/widgets/turkey_packages_card/turkey_package
 class TurkeyPackagesGrid extends StatelessWidget {
   final List<TurkeyPackageModel> packages;
   final Function(TurkeyPackageModel) onPackageTap;
-  final List<dynamic> cartItems; // ✅ To check which cards are selected
+  final List<dynamic> cartItems;
 
   const TurkeyPackagesGrid({
     super.key,
@@ -23,11 +23,13 @@ class TurkeyPackagesGrid extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: packages.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
-          childAspectRatio: 0.8,
+          // ✅ Use mainAxisExtent for fixed pixel height instead of ratio
+          // This prevents the grid from over-allocating vertical space
+          mainAxisExtent: AppDimensions.h(130),
         ),
         itemBuilder: (context, index) {
           final package = packages[index];

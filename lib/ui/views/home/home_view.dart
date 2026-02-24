@@ -34,7 +34,7 @@ class HomeView extends StackedView<HomeViewModel> {
               const CustomAppBar(),
               SizedBox(height: AppDimensions.h(16)),
 
-              // Search
+              // Search (UI only — no onChanged wired)
               const CustomSearchBar(),
               SizedBox(height: AppDimensions.h(16)),
 
@@ -43,55 +43,54 @@ class HomeView extends StackedView<HomeViewModel> {
               SizedBox(height: AppDimensions.h(16)),
 
               // Filter Buttons
-              const PackageFilterButtons(),
+              PackageFilterButtons(
+                selectedIndex: viewModel.selectedFilterIndex,
+                onTap: (index) => viewModel.onFilterChanged(index),
+              ),
               SizedBox(height: AppDimensions.h(16)),
 
               // Turkey Section
-              Padding(
-                padding: EdgeInsets.only(
-                  left: AppDimensions.pHuge,
-                  right: AppDimensions.pHuge,
+              if (viewModel.turkeyPackages.isNotEmpty) ...[
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: AppDimensions.pHuge,
+                    right: AppDimensions.pHuge,
+                  ),
+                  child: Text(
+                    titleTurkey,
+                    style: AppTextStyles.sectionTitle,
+                  ),
                 ),
-                child: Text(
-                  titleCountry,
-                  style: AppTextStyles.sectionTitle,
+                SizedBox(height: AppDimensions.pM),
+                TurkeyPackagesGrid(
+                  packages: viewModel.turkeyPackages,
+                  cartItems: viewModel.cartItems,
+                  onPackageTap: (package) =>
+                      viewModel.onTurkeyPackageTap(package),
                 ),
-              ),
-              SizedBox(height: AppDimensions.pM),
-
-              // Turkey Packages Grid
-              TurkeyPackagesGrid(
-                packages: viewModel.turkeyPackages,
-                cartItems: viewModel.cartItems,
-                onPackageTap: (package) =>
-                    viewModel.onTurkeyPackageTap(package),
-              ),
-              SizedBox(
-                  height: AppDimensions.h(
-                      24)), // Slightly more space between sections
+                SizedBox(height: AppDimensions.h(24)),
+              ],
 
               // Global Section
-              Padding(
-                padding: EdgeInsets.only(
-                  left: AppDimensions.pHuge,
-                  right: AppDimensions.pHuge,
+              if (viewModel.globalPackages.isNotEmpty) ...[
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: AppDimensions.pHuge,
+                    right: AppDimensions.pHuge,
+                  ),
+                  child: Text(
+                    titleGlobal,
+                    style: AppTextStyles.sectionTitle,
+                  ),
                 ),
-                child: Text(
-                  titleGlobal,
-                  style: AppTextStyles.sectionTitle,
+                SizedBox(height: AppDimensions.pM),
+                GlobalPackagesGrid(
+                  packages: viewModel.globalPackages,
+                  cartItems: viewModel.cartItems,
+                  onTap: (package) => viewModel.onGlobalPackageTap(package),
                 ),
-              ),
-              SizedBox(height: AppDimensions.pM),
-
-              // 🔥 ADD THIS - Global Packages Grid
-              GlobalPackagesGrid(
-                packages: viewModel.globalPackages,
-                cartItems: viewModel.cartItems,
-                onTap: (package) => viewModel.onGlobalPackageTap(package),
-              ),
-
-              // Bottom padding
-              SizedBox(height: AppDimensions.h(24)),
+                SizedBox(height: AppDimensions.h(24)),
+              ],
 
               Padding(
                 padding: EdgeInsets.only(

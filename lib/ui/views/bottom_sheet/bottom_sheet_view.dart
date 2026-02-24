@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_task_zain/models/turkey_model.dart';
 import 'package:flutter_task_zain/ui/views/bottom_sheet/bottom_sheet_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -23,7 +24,7 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
       final data = request.data as Map<String, dynamic>;
       viewModel.initialize(
         data['cartItems'] as List<dynamic>,
-        data['onRemove'] as Function(dynamic), // ✅ Pass callback to viewmodel
+        data['onRemove'] as Function(dynamic),
       );
     }
   }
@@ -36,7 +37,6 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
   ) {
     AppDimensions.init(context);
 
-    // ✅ Show max 2 items, scroll if more
     final double itemHeight = AppDimensions.h(68);
     final double maxHeight = itemHeight * 2;
 
@@ -59,7 +59,6 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
         children: [
           SizedBox(height: AppDimensions.h(8)),
 
-          // Cart Items
           if (viewModel.items.isEmpty)
             Center(
               child: Padding(
@@ -75,7 +74,8 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
               constraints: BoxConstraints(maxHeight: maxHeight),
               child: ListView.separated(
                 shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
+                // ✅ ClampingScrollPhysics doesn't compete with tap gestures
+                physics: const ClampingScrollPhysics(),
                 itemCount: viewModel.items.length,
                 separatorBuilder: (_, __) => Divider(
                   color: borderGrey,
@@ -178,13 +178,17 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
 
           SizedBox(width: AppDimensions.pM),
 
-          // Red ✕ remove
+          // ✅ HitTestBehavior.opaque ensures the tap area is fully captured
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () => viewModel.removeItem(item),
-            child: Icon(
-              Icons.close,
-              color: Colors.red,
-              size: AppDimensions.sp(24),
+            child: Padding(
+              padding: EdgeInsets.all(AppDimensions.pS),
+              child: Icon(
+                Icons.close,
+                color: Colors.red,
+                size: AppDimensions.sp(24),
+              ),
             ),
           ),
         ],
@@ -201,7 +205,9 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // ✅ HitTestBehavior.opaque prevents scroll from stealing the tap
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () => viewModel.decreaseQuantity(item),
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -211,13 +217,19 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
               child: Text("-", style: AppTextStyles.bottomSheetCounter),
             ),
           ),
+
           SizedBox(width: AppDimensions.w(16)),
+
           Text(
             "x${item.quantity ?? 1}",
             style: AppTextStyles.bottomSheetCounter,
           ),
+
           SizedBox(width: AppDimensions.w(16)),
+
+          // ✅ HitTestBehavior.opaque prevents scroll from stealing the tap
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () => viewModel.increaseQuantity(item),
             child: Padding(
               padding: EdgeInsets.symmetric(

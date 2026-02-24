@@ -13,7 +13,7 @@ const String buttonLocal = "Standard";
 const String buttonRegional = "Unlimited";
 
 // Section Titles
-const String titleCountry = "8 Bundles Available for Turkey";
+const String titleTurkey = "8 Bundles Available for Turkey";
 const String titleGlobal = "Regional & Global Plans Supporting Turkey";
 const String titleSupport = "Need support?";
 

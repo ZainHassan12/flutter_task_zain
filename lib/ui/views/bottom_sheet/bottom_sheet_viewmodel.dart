@@ -1,6 +1,5 @@
 import 'package:flutter_task_zain/models/otherRegions_model.dart';
 import 'package:flutter_task_zain/models/turkey_model.dart';
-import 'package:flutter_task_zain/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 
 class CartBottomSheetViewModel extends BaseViewModel {
@@ -10,11 +9,33 @@ class CartBottomSheetViewModel extends BaseViewModel {
   double _totalPrice = 0;
   double get totalPrice => _totalPrice;
 
-  // ✅ Callback to notify HomeViewModel when an item is removed
   Function(dynamic)? _onRemove;
 
   void initialize(List<dynamic> cartItems, Function(dynamic) onRemove) {
-    _items = cartItems;
+    // ✅ Deep copy so this list is independent from HomeViewModel's list
+    _items = cartItems.map((item) {
+      if (item is TurkeyPackageModel) {
+        return TurkeyPackageModel(
+          id: item.id,
+          data: item.data,
+          validityDays: item.validityDays,
+          price: item.price,
+          quantity: item.quantity,
+        );
+      } else if (item is GlobalPackageModel) {
+        return GlobalPackageModel(
+          id: item.id,
+          name: item.name,
+          data: item.data,
+          validityDays: item.validityDays,
+          supportedCountries: item.supportedCountries,
+          price: item.price,
+          quantity: item.quantity,
+        );
+      }
+      return item;
+    }).toList();
+
     _onRemove = onRemove;
     _calculateTotal();
     notifyListeners();
@@ -30,10 +51,8 @@ class CartBottomSheetViewModel extends BaseViewModel {
   void increaseQuantity(dynamic item) {
     final index = _items.indexWhere((i) => i.id == item.id);
     if (index != -1) {
-      if (_items[index].quantity == null) {
-        _items[index].quantity = 1;
-      }
-      _items[index].quantity++;
+      // ✅ Assign new quantity value to trigger change detection
+      _items[index].quantity = (_items[index].quantity ?? 1) + 1;
       _calculateTotal();
       notifyListeners();
     }
@@ -42,32 +61,32 @@ class CartBottomSheetViewModel extends BaseViewModel {
   void decreaseQuantity(dynamic item) {
     final index = _items.indexWhere((i) => i.id == item.id);
     if (index != -1) {
-      if (_items[index].quantity == null) {
-        _items[index].quantity = 1;
-      }
-      if (_items[index].quantity > 1) {
-        _items[index].quantity--;
+      final currentQty = _items[index].quantity ?? 1;
+      if (currentQty > 1) {
+        _items[index].quantity = currentQty - 1;
+        _calculateTotal();
+        notifyListeners();
       } else {
-        // ✅ Also notify HomeViewModel when quantity hits 0
-        _onRemove?.call(_items[index]);
+        // Quantity hits 0 — remove item
+        final removedItem = _items[index];
         _items.removeAt(index);
+        _onRemove?.call(removedItem); // ✅ Sync removal to HomeViewModel
+        _calculateTotal();
+        notifyListeners();
       }
-      _calculateTotal();
-      notifyListeners();
     }
   }
 
-  // ✅ Remove item and sync back to HomeViewModel via callback
   void removeItem(dynamic item) {
     _items.removeWhere((i) => i.id == item.id);
-    _onRemove?.call(item); // 🔑 This updates HomeViewModel so border disappears
+    _onRemove?.call(item); // ✅ Sync removal to HomeViewModel
     _calculateTotal();
     notifyListeners();
   }
 
   String getItemDescription(dynamic item) {
     if (item is TurkeyPackageModel) {
-      return "${item.data} $gbUnit / ${item.validityDays} Days";
+      return "${item.data} GB / ${item.validityDays} Days";
     } else if (item is GlobalPackageModel) {
       return "${item.data} / ${item.validityDays} Days • ${item.supportedCountries} countries";
     }
@@ -76,7 +95,7 @@ class CartBottomSheetViewModel extends BaseViewModel {
 
   String getItemName(dynamic item) {
     if (item is TurkeyPackageModel) {
-      return "${item.data} $gbUnit";
+      return "${item.data} GB";
     } else if (item is GlobalPackageModel) {
       return item.name;
     }

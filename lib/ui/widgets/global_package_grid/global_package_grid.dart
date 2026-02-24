@@ -6,7 +6,7 @@ import 'package:flutter_task_zain/ui/widgets/global_package_card/global_package_
 class GlobalPackagesGrid extends StatelessWidget {
   final List<GlobalPackageModel> packages;
   final Function(GlobalPackageModel) onTap;
-  final List<dynamic> cartItems; // ✅ To check which cards are selected
+  final List<dynamic> cartItems;
 
   const GlobalPackagesGrid({
     super.key,
@@ -23,11 +23,13 @@ class GlobalPackagesGrid extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: packages.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 0.9,
+          // ✅ Use mainAxisExtent for fixed pixel height instead of ratio
+          // Global cards have more content so need more height
+          mainAxisExtent: AppDimensions.h(170),
         ),
         itemBuilder: (context, index) {
           final package = packages[index];

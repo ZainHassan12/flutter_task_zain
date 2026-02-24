@@ -5,9 +5,32 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_task_zain/app/app.locator.dart';
 
+// 0 = All, 1 = Standard, 2 = Unlimited
+enum PackageFilter { all, standard, unlimited }
+
 class HomeViewModel extends BaseViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
+
+  // 🔹 Filter
+  int _selectedFilterIndex = 0;
+  int get selectedFilterIndex => _selectedFilterIndex;
+
+  PackageFilter get _activeFilter {
+    switch (_selectedFilterIndex) {
+      case 1:
+        return PackageFilter.standard;
+      case 2:
+        return PackageFilter.unlimited;
+      default:
+        return PackageFilter.all;
+    }
+  }
+
+  void onFilterChanged(int index) {
+    _selectedFilterIndex = index;
+    notifyListeners();
+  }
 
   // 🔹 Cart items
   final List<dynamic> _cartItems = [];
@@ -112,9 +135,32 @@ class HomeViewModel extends BaseViewModel {
     ),
   ];
 
-  // Public getters
-  List<TurkeyPackageModel> get turkeyPackages => _turkeyPackages;
-  List<GlobalPackageModel> get globalPackages => _globalPackages;
+  // ✅ Helper: is a data value "unlimited"?
+  bool _isUnlimited(String data) => data.trim().toLowerCase() == 'unlimited';
+
+  // 🔹 Filtered Turkey packages
+  List<TurkeyPackageModel> get turkeyPackages {
+    switch (_activeFilter) {
+      case PackageFilter.standard:
+        return _turkeyPackages.where((p) => !_isUnlimited(p.data)).toList();
+      case PackageFilter.unlimited:
+        return _turkeyPackages.where((p) => _isUnlimited(p.data)).toList();
+      case PackageFilter.all:
+        return _turkeyPackages;
+    }
+  }
+
+  // 🔹 Filtered Global packages
+  List<GlobalPackageModel> get globalPackages {
+    switch (_activeFilter) {
+      case PackageFilter.standard:
+        return _globalPackages.where((p) => !_isUnlimited(p.data)).toList();
+      case PackageFilter.unlimited:
+        return _globalPackages.where((p) => _isUnlimited(p.data)).toList();
+      case PackageFilter.all:
+        return _globalPackages;
+    }
+  }
 
   // 🔹 Calculate total price of cart items
   double get cartTotal {
@@ -167,10 +213,10 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // ✅ Called by bottom sheet when user taps ✕ — syncs removal back to HomeViewModel
+  // ✅ Called by bottom sheet when user taps ✕
   void onItemRemovedFromSheet(dynamic item) {
     _cartItems.removeWhere((i) => i.id == item.id);
-    notifyListeners(); // triggers gradient border to disappear
+    notifyListeners();
   }
 
   // 🔹 Show cart bottom sheet
@@ -181,7 +227,7 @@ class HomeViewModel extends BaseViewModel {
       description: 'Selected packages',
       data: {
         'cartItems': _cartItems,
-        'onRemove': onItemRemovedFromSheet, // ✅ Pass callback to sheet
+        'onRemove': onItemRemovedFromSheet,
       },
     );
 
@@ -189,7 +235,6 @@ class HomeViewModel extends BaseViewModel {
       _handleCheckout(result?.data);
     }
 
-    // ✅ Always notify after sheet closes so border state is in sync
     notifyListeners();
   }
 
@@ -197,19 +242,6 @@ class HomeViewModel extends BaseViewModel {
   void _handleCheckout(dynamic totalAmount) {
     _cartItems.clear();
     notifyListeners();
-  }
-
-  // 🔹 Update package quantity
-  void updateQuantity(dynamic package, int newQuantity) {
-    final index = _cartItems.indexWhere((item) => item.id == package.id);
-    if (index != -1) {
-      if (newQuantity <= 0) {
-        _cartItems.removeAt(index);
-      } else {
-        _cartItems[index].quantity = newQuantity;
-      }
-      notifyListeners();
-    }
   }
 
   // 🔹 Remove package from cart

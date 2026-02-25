@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_task_zain/ui/common/app_colors.dart';
 import 'package:flutter_task_zain/ui/common/app_dimensions.dart';
@@ -8,13 +7,8 @@ import 'package:flutter_task_zain/ui/widgets/common/app_bar/app_bar_model.dart';
 import 'package:stacked/stacked.dart';
 
 class CustomAppBar extends StackedView<CustomAppBarModel> {
-  final VoidCallback? onBackTap;
-  final VoidCallback? onCartTap;
-
   const CustomAppBar({
     super.key,
-    this.onBackTap,
-    this.onCartTap,
   });
 
   @override
@@ -30,14 +24,14 @@ class CustomAppBar extends StackedView<CustomAppBarModel> {
       width: double.infinity,
       child: Stack(
         children: [
-          // 🔵 Background
+          // Background
           Container(
             height: AppDimensions.appBarHeight,
             width: double.infinity,
             color: primaryBlue,
           ),
 
-          // 🟢 Ellipse (decorative)
+          // Ellipse
           Positioned(
             top: AppDimensions.ellipseTop,
             left: AppDimensions.ellipseLeft,
@@ -59,7 +53,7 @@ class CustomAppBar extends StackedView<CustomAppBarModel> {
             ),
           ),
 
-          // 🔹 AppBar Content Row
+          // AppBar
           Positioned(
             top: AppDimensions.appBarItemsTop,
             left: AppDimensions.appBarItemsLeft,
@@ -67,9 +61,9 @@ class CustomAppBar extends StackedView<CustomAppBarModel> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                /// 🔙 Back Button
+                // Back Button
                 GestureDetector(
-                  onTap: onBackTap,
+                  onTap: () {},
                   child: SizedBox(
                     width: AppDimensions.backButtonSize,
                     height: AppDimensions.backButtonSize,
@@ -81,15 +75,15 @@ class CustomAppBar extends StackedView<CustomAppBarModel> {
                   ),
                 ),
 
-                /// 🏷 Title
+                // Title
                 Text(
                   appTitle,
                   style: AppTextStyles.appBarText,
                 ),
 
-                /// 🛒 Cart Button
+                //Cart Button
                 GestureDetector(
-                  onTap: onCartTap,
+                  onTap: () {},
                   child: SizedBox(
                     width: AppDimensions.cartButtonWidth,
                     height: AppDimensions.cartButtonHeight,

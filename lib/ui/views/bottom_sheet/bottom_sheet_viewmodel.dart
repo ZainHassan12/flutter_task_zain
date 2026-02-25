@@ -12,7 +12,6 @@ class CartBottomSheetViewModel extends BaseViewModel {
   Function(dynamic)? _onRemove;
 
   void initialize(List<dynamic> cartItems, Function(dynamic) onRemove) {
-    // ✅ Deep copy so this list is independent from HomeViewModel's list
     _items = cartItems.map((item) {
       if (item is TurkeyPackageModel) {
         return TurkeyPackageModel(
@@ -51,7 +50,6 @@ class CartBottomSheetViewModel extends BaseViewModel {
   void increaseQuantity(dynamic item) {
     final index = _items.indexWhere((i) => i.id == item.id);
     if (index != -1) {
-      // ✅ Assign new quantity value to trigger change detection
       _items[index].quantity = (_items[index].quantity ?? 1) + 1;
       _calculateTotal();
       notifyListeners();
@@ -70,7 +68,7 @@ class CartBottomSheetViewModel extends BaseViewModel {
         // Quantity hits 0 — remove item
         final removedItem = _items[index];
         _items.removeAt(index);
-        _onRemove?.call(removedItem); // ✅ Sync removal to HomeViewModel
+        _onRemove?.call(removedItem);
         _calculateTotal();
         notifyListeners();
       }
@@ -79,7 +77,7 @@ class CartBottomSheetViewModel extends BaseViewModel {
 
   void removeItem(dynamic item) {
     _items.removeWhere((i) => i.id == item.id);
-    _onRemove?.call(item); // ✅ Sync removal to HomeViewModel
+    _onRemove?.call(item);
     _calculateTotal();
     notifyListeners();
   }

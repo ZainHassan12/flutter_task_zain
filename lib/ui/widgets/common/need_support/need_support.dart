@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_task_zain/ui/common/app_colors.dart';
 import 'package:flutter_task_zain/ui/common/app_dimensions.dart';
 import 'package:flutter_task_zain/ui/common/app_strings.dart';
 import 'package:flutter_task_zain/ui/common/app_styles.dart';
@@ -20,7 +19,7 @@ class NeedSupport extends StatelessWidget {
             contactPrefix,
             style: AppTextStyles.supportedRegular,
           ),
-          SizedBox(width: AppDimensions.pXS),
+          SizedBox(width: AppDimensions.pS),
           Image.asset(
             whatsappIcon,
             width: AppDimensions.w(24),

@@ -5,17 +5,9 @@ import 'app_colors.dart';
 class AppTextStyles {
   AppTextStyles._();
 
-  /// Base Fonts
   static const _sfProBold = TextStyle(
     fontFamily: 'SF Pro Display',
     fontWeight: FontWeight.w700,
-    letterSpacing: 0,
-    height: 1.5,
-  );
-
-  static const _sfProMedium = TextStyle(
-    fontFamily: 'SF Pro Display',
-    fontWeight: FontWeight.w500,
     letterSpacing: 0,
     height: 1.5,
   );
@@ -34,7 +26,7 @@ class AppTextStyles {
     height: 1.5,
   );
 
-  /// App Bar
+  // App Bar
   static TextStyle get appBarText =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(16), color: white);
 
@@ -57,10 +49,11 @@ class AppTextStyles {
   static TextStyle get sectionTitle =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(16), color: textPrimary);
 
-  // Card
+  // CarD
   static TextStyle get cardTitle =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(16), color: textPrimary);
 
+  // Use Regular for supporting text
   static TextStyle get validFor => _sfProRegular.copyWith(
         fontSize: AppDimensions.sp(12),
         color: textSecondary,
@@ -86,7 +79,7 @@ class AppTextStyles {
       _sfProBold.copyWith(fontSize: AppDimensions.sp(15), color: accentBlue);
 
   static TextStyle get bottomSheetDetails =>
-      _sfProMedium.copyWith(fontSize: AppDimensions.sp(12), color: textGrey);
+      _sfProRegular.copyWith(fontSize: AppDimensions.sp(12), color: textGrey);
 
   static TextStyle get bottomSheetCounter =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(14), color: textSecondary);
@@ -98,6 +91,7 @@ class AppTextStyles {
   static TextStyle get checkoutBold =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(14), color: white);
 
+  // Contact
   static TextStyle get contactBold =>
       _sfProBold.copyWith(fontSize: AppDimensions.sp(14), color: greenAccent);
 

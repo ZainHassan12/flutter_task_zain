@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_task_zain/models/turkey_model.dart';
 import 'package:flutter_task_zain/ui/views/bottom_sheet/bottom_sheet_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -74,7 +73,6 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
               constraints: BoxConstraints(maxHeight: maxHeight),
               child: ListView.separated(
                 shrinkWrap: true,
-                // ✅ ClampingScrollPhysics doesn't compete with tap gestures
                 physics: const ClampingScrollPhysics(),
                 itemCount: viewModel.items.length,
                 separatorBuilder: (_, __) => Divider(
@@ -146,7 +144,6 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Left: Price + Description
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,14 +168,9 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
               ],
             ),
           ),
-
           SizedBox(width: AppDimensions.pM),
-
           _quantityPill(viewModel, item),
-
           SizedBox(width: AppDimensions.pM),
-
-          // ✅ HitTestBehavior.opaque ensures the tap area is fully captured
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => viewModel.removeItem(item),
@@ -205,7 +197,6 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // ✅ HitTestBehavior.opaque prevents scroll from stealing the tap
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => viewModel.decreaseQuantity(item),
@@ -217,17 +208,12 @@ class CartBottomSheet extends StackedView<CartBottomSheetViewModel> {
               child: Text("-", style: AppTextStyles.bottomSheetCounter),
             ),
           ),
-
           SizedBox(width: AppDimensions.w(16)),
-
           Text(
             "x${item.quantity ?? 1}",
             style: AppTextStyles.bottomSheetCounter,
           ),
-
           SizedBox(width: AppDimensions.w(16)),
-
-          // ✅ HitTestBehavior.opaque prevents scroll from stealing the tap
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () => viewModel.increaseQuantity(item),

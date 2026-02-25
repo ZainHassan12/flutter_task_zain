@@ -20,6 +20,7 @@ class GlobalPackagesGrid extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppDimensions.pHuge),
       child: GridView.builder(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: packages.length,
@@ -27,9 +28,7 @@ class GlobalPackagesGrid extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          // ✅ Use mainAxisExtent for fixed pixel height instead of ratio
-          // Global cards have more content so need more height
-          mainAxisExtent: AppDimensions.h(170),
+          mainAxisExtent: AppDimensions.secondCardHeight,
         ),
         itemBuilder: (context, index) {
           final package = packages[index];

@@ -7,11 +7,8 @@ import 'package:stacked/stacked.dart';
 import 'country_badge_model.dart';
 
 class CountryBadge extends StackedView<CountryBadgeModel> {
-  final VoidCallback? onRemove;
-
   const CountryBadge({
     super.key,
-    this.onRemove,
   });
 
   @override
@@ -24,7 +21,7 @@ class CountryBadge extends StackedView<CountryBadgeModel> {
 
     return Padding(
       padding: EdgeInsets.only(
-        left: AppDimensions.pHuge, // Only left padding to align left
+        left: AppDimensions.pHuge,
       ),
       child: Container(
         height: AppDimensions.countryContainerHeight,
@@ -39,7 +36,7 @@ class CountryBadge extends StackedView<CountryBadgeModel> {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            /// 🇹🇷 Flag
+            // Flag
             Image.asset(
               flagTurkey,
               width: AppDimensions.flagSize,
@@ -49,7 +46,7 @@ class CountryBadge extends StackedView<CountryBadgeModel> {
 
             SizedBox(width: AppDimensions.pM),
 
-            /// Country Name
+            // Country Name
             Text(
               appTitle,
               style: AppTextStyles.countryName,

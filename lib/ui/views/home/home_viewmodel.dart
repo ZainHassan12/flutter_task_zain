@@ -5,14 +5,11 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_task_zain/app/app.locator.dart';
 
-// 0 = All, 1 = Standard, 2 = Unlimited
 enum PackageFilter { all, standard, unlimited }
 
 class HomeViewModel extends BaseViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
-  final _navigationService = locator<NavigationService>();
 
-  // 🔹 Filter
   int _selectedFilterIndex = 0;
   int get selectedFilterIndex => _selectedFilterIndex;
 
@@ -32,11 +29,11 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // 🔹 Cart items
+  // Cart items
   final List<dynamic> _cartItems = [];
   List<dynamic> get cartItems => _cartItems;
 
-  // 🔹 Turkey Packages List
+  // Turkey Packages List
   final List<TurkeyPackageModel> _turkeyPackages = [
     TurkeyPackageModel(
       id: "turkey_1",
@@ -135,10 +132,9 @@ class HomeViewModel extends BaseViewModel {
     ),
   ];
 
-  // ✅ Helper: is a data value "unlimited"?
   bool _isUnlimited(String data) => data.trim().toLowerCase() == 'unlimited';
 
-  // 🔹 Filtered Turkey packages
+  // Filtered Turkey packages
   List<TurkeyPackageModel> get turkeyPackages {
     switch (_activeFilter) {
       case PackageFilter.standard:
@@ -150,7 +146,7 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  // 🔹 Filtered Global packages
+  // Filtered Global packages
   List<GlobalPackageModel> get globalPackages {
     switch (_activeFilter) {
       case PackageFilter.standard:
@@ -162,7 +158,7 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  // 🔹 Calculate total price of cart items
+  // Calculate total price
   double get cartTotal {
     double total = 0;
     for (var item in _cartItems) {
@@ -171,19 +167,19 @@ class HomeViewModel extends BaseViewModel {
     return total;
   }
 
-  // 🔹 Handle Turkey package tap
+  // Handle Turkey package tap
   void onTurkeyPackageTap(TurkeyPackageModel package) {
     _addToCart(package);
     _showCartBottomSheet();
   }
 
-  // 🔹 Handle Global package tap
+  // Handle Global package tap
   void onGlobalPackageTap(GlobalPackageModel package) {
     _addToCart(package);
     _showCartBottomSheet();
   }
 
-  // 🔹 Add package to cart or increment quantity if exists
+  // Add package to cart or increment quantity
   void _addToCart(dynamic package) {
     try {
       final existingItem = _cartItems.firstWhere(
@@ -213,13 +209,12 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // ✅ Called by bottom sheet when user taps ✕
   void onItemRemovedFromSheet(dynamic item) {
     _cartItems.removeWhere((i) => i.id == item.id);
     notifyListeners();
   }
 
-  // 🔹 Show cart bottom sheet
+  // Show cart bottom sheet
   void _showCartBottomSheet() async {
     final result = await _bottomSheetService.showCustomSheet(
       variant: BottomSheetType.cartBottom,
@@ -238,19 +233,19 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // 🔹 Handle checkout
+  // Handle checkout
   void _handleCheckout(dynamic totalAmount) {
     _cartItems.clear();
     notifyListeners();
   }
 
-  // 🔹 Remove package from cart
+  // Remove package from cart
   void removeFromCart(dynamic package) {
     _cartItems.removeWhere((item) => item.id == package.id);
     notifyListeners();
   }
 
-  // 🔹 Clear entire cart
+  // Clear entire cart
   void clearCart() {
     _cartItems.clear();
     notifyListeners();

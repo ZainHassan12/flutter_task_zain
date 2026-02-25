@@ -84,7 +84,6 @@ class TurkeyPackageCard extends StatelessWidget {
       ),
     );
 
-    // ✅ Gradient border when selected, plain border when not
     if (isSelected) {
       return GestureDetector(
         onTap: onTap,

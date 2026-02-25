@@ -59,7 +59,7 @@ class CustomSearchBar extends StackedView<CustomSearchBarModel> {
             ),
             prefixIcon: Padding(
               padding: EdgeInsets.all(AppDimensions.pM),
-              child: Icon(
+              child: const Icon(
                 Icons.search,
                 size: 20,
                 color: textGrey,

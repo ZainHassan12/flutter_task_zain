@@ -34,7 +34,6 @@ class HomeView extends StackedView<HomeViewModel> {
               const CustomAppBar(),
               SizedBox(height: AppDimensions.h(16)),
 
-              // Search (UI only — no onChanged wired)
               const CustomSearchBar(),
               SizedBox(height: AppDimensions.h(16)),
 
@@ -76,7 +75,6 @@ class HomeView extends StackedView<HomeViewModel> {
                 Padding(
                   padding: EdgeInsets.only(
                     left: AppDimensions.pHuge,
-                    right: AppDimensions.pHuge,
                   ),
                   child: Text(
                     titleGlobal,
@@ -95,7 +93,6 @@ class HomeView extends StackedView<HomeViewModel> {
               Padding(
                 padding: EdgeInsets.only(
                   left: AppDimensions.pHuge,
-                  right: AppDimensions.pHuge,
                 ),
                 child: Text(
                   "Need Support?",
@@ -103,7 +100,9 @@ class HomeView extends StackedView<HomeViewModel> {
                 ),
               ),
               const NeedSupport(),
-              SizedBox(height: AppDimensions.h(24)),
+              SizedBox(
+                  height:
+                      AppDimensions.h(30) + AppDimensions.bottomSheetHeight),
             ],
           ),
         ),

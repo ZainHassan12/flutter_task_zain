@@ -20,6 +20,7 @@ class TurkeyPackagesGrid extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: AppDimensions.pHuge),
       child: GridView.builder(
+        padding: EdgeInsets.zero,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: packages.length,
@@ -27,9 +28,7 @@ class TurkeyPackagesGrid extends StatelessWidget {
           crossAxisCount: 3,
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
-          // ✅ Use mainAxisExtent for fixed pixel height instead of ratio
-          // This prevents the grid from over-allocating vertical space
-          mainAxisExtent: AppDimensions.h(130),
+          mainAxisExtent: AppDimensions.itemCardHeight,
         ),
         itemBuilder: (context, index) {
           final package = packages[index];
